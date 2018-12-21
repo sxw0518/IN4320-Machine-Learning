@@ -1,0 +1,17 @@
+1.对于unlabled data sample数不是很多时，可以训练一个classifier，根据classifier来assign labels
+2.如果unlabled data sample数变得很多时，有可能有用的方法：1）clustering -> 再label -> create a bigger labeled set；2) reduce dimensionality -> 样本数减少/estimation可以变得更好
+
+(i) label propagation：
+first nearest neighbor data -> copy the label -> assume this data has become the labeled data (类似single linkage)
+适用于graph-based semi-supervised learning：object function：min\sum(_i,j)[w||y_i - y_j||_P]
+如果是大于两个class，可以用one-hot coding
+(ii) transductive support vector machine:
+前提是已知是unoverlapping data/linear separatable data
+目的就是使用unlabeled data + labeled data 找到一个decision boundary，能使margin达到最大
+但是计算时，需要计算一个一个classifier，并计算margin大小，实现起来可能不是很简单
+(iii) generative models:
+first seek to estimate p(x|y) -> p(x|y,theta)
+in semi-supervised learning: argmax_theta (logp({x_i,y_i}_i = 1 ^ l |theta) + lambda logp({x_i}_i = l +1 ^ l+u|theta)) -- mixture distribution
+hidden assumption: the unlabled data necessarily improves performance
+方法：expectation maximum； k-nn: 适用于无法估计distribution的情况
+(iv) low-density separation
